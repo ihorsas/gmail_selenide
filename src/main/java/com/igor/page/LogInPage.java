@@ -30,7 +30,7 @@ public class LogInPage extends BasePage {
     }
 
     private SelenideElement errorMessagePassword() {
-        return $(By.xpath("//*[@id=\"view_container\"]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div[2]/div[2]/span/text()"));
+        return $(By.xpath("//*[(contains(text(), 'Неправильний') or contains(text(), 'Неверный') or contains(text(), 'Incorrect'))]"));
     }
 
     @Step("Enter username {0} running method: {method} step")
@@ -56,7 +56,9 @@ public class LogInPage extends BasePage {
 
     @Step("Proceed to inbox running method: {method} step")
     public MainPage proceedToInbox() {
+        AllureLogger.info("Waiting redirect to stackoverflow");
         new WebDriverWait(WebDriverRunner.getWebDriver(), wait).until((driver) -> driver.getCurrentUrl().contains("stackoverflow"));
+        AllureLogger.info("Proceed to inbox page");
         open(new Url().getUrl());
         waitUntilPagesIsLoaded();
         return new MainPage();
@@ -70,13 +72,17 @@ public class LogInPage extends BasePage {
                 .proceedToInbox();
     }
 
+    @Step("Checking error message for username: {method} step")
     public void verifyErrorMessageUsername() {
         waitUntilPagesIsLoaded();
+        AllureLogger.info("Checking error message for username");
         assertTrue(errorMessageUsername().isDisplayed());
     }
 
+    @Step("Checking error message for password: {method} step")
     public void verifyErrorMessagePassword() {
         waitUntilPagesIsLoaded();
+        AllureLogger.info("Checking error message for password");
         assertTrue(errorMessagePassword().isDisplayed());
     }
 }

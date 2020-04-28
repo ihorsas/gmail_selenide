@@ -2,7 +2,6 @@ package com.igor;
 
 import com.igor.model.User;
 import com.igor.page.LogInPage;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.igor.utils.parser.JsonParser.getValidUser;

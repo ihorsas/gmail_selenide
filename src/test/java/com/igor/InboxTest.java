@@ -30,23 +30,20 @@ public class InboxTest extends GmailTest {
         logInPage.logIn(username, password)
                 .verifyInboxOpen();
         waitUntilPagesIsLoaded();
-        new MessageBO().fillFieldsForMessage(getIncorrectReceiver(), MESSAGE_TITLE.get(), getMessage())
-                .sendMessage()
-                .verifyAlertWidgetVisible()
-                .correctReceiver(getReceiver())
+        new MessageBO().fillFieldsForMessage(getReceiver(), MESSAGE_TITLE.get(), getMessage())
                 .sendMessage()
                 .verifyLetterSent(MESSAGE_TITLE.get());
 
     }
 
     @Test(dataProvider = "users")
-    void testSingInAndGoToSavedMessageAndCheckCorrectAndSendMess(String username, String password) {
+    void saveDraftMessageTest(String username, String password) {
         MESSAGE_TITLE.set(UUID.randomUUID().toString());
         LogInPage logInPage = new LogInPage();
         logInPage.logIn(username, password)
                 .verifyInboxOpen();
         waitUntilPagesIsLoaded();
-        new MessageBO().fillFieldsForMessage(getIncorrectReceiver(), MESSAGE_TITLE.get(), getMessage())
+        new MessageBO().fillFieldsForMessage(getReceiver(), MESSAGE_TITLE.get(), getMessage())
                 .createDraftMessage()
                 .verifyDraftMessageCreated(MESSAGE_TITLE.get());
     }

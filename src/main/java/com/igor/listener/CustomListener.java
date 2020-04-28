@@ -1,7 +1,6 @@
 package com.igor.listener;
 
-import com.codeborne.selenide.junit.ScreenShooter;
-import com.igor.driver.DriverManager;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,9 +24,16 @@ public class CustomListener extends TestListenerAdapter {
     }
 
     public void onTestFailure(ITestResult result){
+        takeScreenshot();
         logger.info("Test failed: " + result.getName());
         if(Objects.nonNull(result.getThrowable())){
             result.getThrowable().printStackTrace();
         }
     }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    private byte[] takeScreenshot(){
+        return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+    }
+
 }

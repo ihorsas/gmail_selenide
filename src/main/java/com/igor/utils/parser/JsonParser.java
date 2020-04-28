@@ -57,10 +57,6 @@ public class JsonParser {
         return (String) ((JSONArray)((JSONObject)jsonObject.get("users")).get("passwords")).get(index);
     }
 
-    public static String getIncorrectReceiver(){
-        return (String) ((JSONObject)jsonObject.get("receivers")).get("incorrect_receiver");
-    }
-
     public static String getReceiver(){
         return (String) ((JSONObject)jsonObject.get("receivers")).get("receiver");
     }

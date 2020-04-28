@@ -4,21 +4,17 @@ import com.igor.logger.AllureLogger;
 import com.igor.page.DraftMessagePage;
 import com.igor.page.MainPage;
 import com.igor.page.SentPage;
-import com.igor.page.widget.AlertDialogWidget;
 import com.igor.page.widget.NewMessageWidget;
 import com.igor.page.widget.SendingMessageDialogWidget;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class MessageBO {
     private MainPage mainPage;
     private SentPage sentPage;
     private DraftMessagePage draftMessagePage;
     private NewMessageWidget newMessageWidget;
-    private AlertDialogWidget alertDialogWidget;
     private SendingMessageDialogWidget sendingMessageDialogWidget;
 
     public MessageBO() {
@@ -26,7 +22,6 @@ public class MessageBO {
         sentPage = new SentPage();
         draftMessagePage = new DraftMessagePage();
         newMessageWidget = new NewMessageWidget();
-        alertDialogWidget = new AlertDialogWidget();
         sendingMessageDialogWidget = new SendingMessageDialogWidget();
     }
 
@@ -43,17 +38,6 @@ public class MessageBO {
         return this;
     }
 
-    @Step("Correct receiver with receiver: {0}. running method: {method} step")
-    public MessageBO correctReceiver(String receiver) {
-        AllureLogger.info("closing alert dialog");
-        alertDialogWidget.clickToButtonOk();
-        AllureLogger.info("deleting incorrect receiver");
-        newMessageWidget.clickToDeleteContact();
-        AllureLogger.info("writing correct receiver");
-        newMessageWidget.setReceiverField(receiver);
-        return this;
-    }
-
     @Step("Send message running method: {method} step")
     public MessageBO sendMessage() {
         AllureLogger.info("sending message");
@@ -63,16 +47,8 @@ public class MessageBO {
 
     @Step("Create draft message message running method: {method} step")
     public MessageBO createDraftMessage() {
-        AllureLogger.info("sending message");
+        AllureLogger.info("saving message");
         newMessageWidget.clickOnButtonSaveAndCloseFormMessage();
-        return this;
-    }
-
-
-    @Step("Checking that alert dialog opened. running method: {method} step")
-    public MessageBO verifyAlertWidgetVisible() {
-        AllureLogger.info("checking opened alert dialog");
-        assertTrue(alertDialogWidget.alertDialogIsEnable(), "Alert dialog is not opened");
         return this;
     }
 
@@ -87,6 +63,7 @@ public class MessageBO {
         return this;
     }
 
+    @Step("Checking that draft message with topic: {0} is in draft message page. running method: {method} step")
     public MessageBO verifyDraftMessageCreated(String topic) {
         AllureLogger.info("opening draft messages page");
         mainPage.proceedToDraftMessages();

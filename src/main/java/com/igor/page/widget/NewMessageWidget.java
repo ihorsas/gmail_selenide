@@ -13,14 +13,6 @@ public class NewMessageWidget extends BasePage {
         return $(By.xpath("//textarea[@name='to']"));
     }
 
-    private SelenideElement receiverArea() {
-        return $(By.xpath("//form[@enctype='multipart/form-data']/div[1]"));
-    }
-
-    private SelenideElement deleteContact() {
-        return $(By.xpath("//input[@name='to']/preceding-sibling::span/div[2]"));
-    }
-
     private SelenideElement titleField() {
         return $(By.xpath("//input[@name='subjectbox']"));
     }
@@ -54,13 +46,8 @@ public class NewMessageWidget extends BasePage {
         sendButton().waitUntil(Condition.enabled, wait).click();
     }
 
-    public void clickToDeleteContact() {
-        messageField().sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, "B"));
-        receiverArea().waitUntil(Condition.visible, wait).click();
-        deleteContact().click();
-    }
-
     public void clickOnButtonSaveAndCloseFormMessage() {
         saveAndCloseFormMessage().click();
+        waitUntilPagesIsLoaded();
     }
 }

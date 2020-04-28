@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="BDD Test Suite" verbose="1" parallel="methods" thread-count="2" configfailurepolicy="continue">
-    <test name="Login and Send Message Test" annotations="JDK" preserve-order="true">
+<suite name="Gmail suite" verbose="1" parallel="classes" thread-count="2" data-provider-thread-count="3" configfailurepolicy="continue">
+    <test name="Login, Send and Draft Message Test" annotations="JDK">
         <classes>
-            <class name="com.igor.GmailTest"/>
+            <class name="com.igor.LoginTest"/>
+            <class name="com.igor.InboxTest"/>
         </classes>
     </test>
 </suite>
